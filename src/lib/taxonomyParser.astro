@@ -3,30 +3,45 @@ import { getSinglePage } from "./contentParser.astro";
 import { slugify } from "./utils/textConverter";
 
 // get all taxonomies from frontmatter
-export const getTaxonomy = async (collection: string, name: string) => {
-  const singlePages = await getSinglePage(collection);
-  const taxonomyPages = singlePages.map((page: any) => page.data[name]);
+export const getTaxonomy = async (data: []) => {
   let taxonomies: string[] = [];
-  for (let i = 0; i < taxonomyPages.length; i++) {
-    const categoryArray = taxonomyPages[i];
-    for (let j = 0; j < categoryArray.length; j++) {
-      taxonomies.push(slugify(categoryArray[j]));
-    }
-  }
+  data.forEach((item: any) => {
+    taxonomies = [...taxonomies, ...item.labels];
+  });
   const taxonomy = [...new Set(taxonomies)];
   return taxonomy;
 };
+// export const getTaxonomy = async (collection: string, name: string) => {
+//   const singlePages = await getSinglePage(collection);
+//   const taxonomyPages = singlePages.map((page: any) => page.data[name]);
+//   let taxonomies: string[] = [];
+//   for (let i = 0; i < taxonomyPages.length; i++) {
+//     const categoryArray = taxonomyPages[i];
+//     for (let j = 0; j < categoryArray.length; j++) {
+//       taxonomies.push(slugify(categoryArray[j]));
+//     }
+//   }
+//   const taxonomy = [...new Set(taxonomies)];
+//   return taxonomy;
+// };
 
-export const getAllTaxonomy = async (collection: string, name: string) => {
-  const singlePages = await getSinglePage(collection);
-  const taxonomyPages = singlePages.map((page: any) => page.data[name]);
+export const getAllTaxonomy = async (data: []) => {
   let taxonomies: string[] = [];
-  for (let i = 0; i < taxonomyPages.length; i++) {
-    const categoryArray = taxonomyPages[i];
-    for (let j = 0; j < categoryArray.length; j++) {
-      taxonomies.push(slugify(categoryArray[j]));
-    }
-  }
+  data.forEach((item: any) => {
+    taxonomies = [...taxonomies, ...item.labels];
+  });
   return taxonomies;
 };
+// export const getAllTaxonomy = async (collection: string, name: string) => {
+//   const singlePages = await getSinglePage(collection);
+//   const taxonomyPages = singlePages.map((page: any) => page.data[name]);
+//   let taxonomies: string[] = [];
+//   for (let i = 0; i < taxonomyPages.length; i++) {
+//     const categoryArray = taxonomyPages[i];
+//     for (let j = 0; j < categoryArray.length; j++) {
+//       taxonomies.push(slugify(categoryArray[j]));
+//     }
+//   }
+//   return taxonomies;
+// };
 ---

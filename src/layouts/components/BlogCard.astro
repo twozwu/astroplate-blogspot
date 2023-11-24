@@ -9,11 +9,11 @@ const {
   blog_folder,
 }: { summary_length: number; blog_folder: string } = config.settings;
 const { data } = Astro.props;
-const { title, image, date, author, categories } = data.data;
+const { title, image, published, author } = data;
 ---
 
 <div class="bg-body dark:bg-darkmode-body">
-  {
+  <!-- {
     image && (
       <Image
         class="mb-6 w-full rounded"
@@ -24,9 +24,9 @@ const { title, image, date, author, categories } = data.data;
         format="webp"
       />
     )
-  }
+  } -->
   <h4 class="mb-3">
-    <a href={`/${blog_folder}/${data.slug}`}>
+    <a href={`/${blog_folder}/`}>
       {title}
     </a>
   </h4>
@@ -34,25 +34,30 @@ const { title, image, date, author, categories } = data.data;
     <li class="mr-4 inline-block">
       <a href={`/authors/${slugify(author)}`}>
         <FaRegUserCircle className={"mr-2 -mt-1 inline-block"} />
-        {humanize(author)}
+        {author.displayName}
+        <!-- {humanize(author)} -->
       </a>
     </li>
     <li class="mr-4 inline-block">
       <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
       {
-        categories.map((category: string, index: number) => (
+        data.labels.map((category: string, index: number) => (
           <a href={`/categories/${slugify(category)}`}>
             {humanize(category)}
-            {index !== categories.length - 1 && ","}
+            {index !== data.labels.length - 1 && ","}
           </a>
         ))
       }
     </li>
   </ul>
-  <p class="mb-6">{plainify(data.body?.slice(0, Number(summary_length)))}</p>
+  <p class="mb-6">{plainify(data.content?.slice(0, Number(summary_length)))}</p>
+  <!-- <a
+    class="btn btn-outline-primary btn-sm"
+    href={`/${blog_folder}/${data.id}`}
+  > -->
   <a
     class="btn btn-outline-primary btn-sm"
-    href={`/${blog_folder}/${data.slug}`}
+    href={`/${blog_folder}/page?id=${data.id}`}
   >
     read more
   </a>

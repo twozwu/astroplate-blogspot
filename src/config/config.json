@@ -11,37 +11,36 @@
     "logo_height": "30",
     "logo_text": "Astroplate"
   },
-
   "settings": {
     "search": true,
     "sticky_header": true,
     "theme_switcher": true,
     "default_theme": "system",
-    "pagination": 2,
+    "pagination": 3,
     "summary_length": 200,
     "blog_folder": "blog"
   },
-
   "params": {
     "contact_form_action": "#",
     "copyright": "Designed And Developed by [Zeon Studio](https://zeon.studio)"
   },
-
   "navigation_button": {
     "enable": true,
     "label": "Get Started",
     "link": "https://github.com/zeon-studio/astroplate"
   },
-
   "disqus": {
     "enable": true,
     "shortname": "themefisher-template",
     "settings": {}
   },
-
   "metadata": {
     "meta_author": "zeon.studio",
     "meta_image": "/images/og-image.png",
     "meta_description": "astro and tailwind boilerplate"
+  },
+
+  "blogspot": {
+    "blog_id": "865432666597080328"
   }
 }

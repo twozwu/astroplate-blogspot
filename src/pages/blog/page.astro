@@ -1,0 +1,56 @@
+---
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import { api } from "@/lib/api/blogspot";
+// import PostSingle from "@/layouts/PostSingle.astro";
+import PostSingle from "@/layouts/PostSingle.tsx";
+
+const baseData = {
+  kind: "blogger#post",
+  id: "8352295441815688939",
+  blog: {
+    id: "865432666597080328",
+  },
+  published: "2023-09-17T03:17:00-07:00",
+  updated: "2023-11-19T22:19:08-08:00",
+  url: "http://twozau.blogspot.com/2023/09/test.html",
+  selfLink:
+    "https://www.googleapis.com/blogger/v3/blogs/865432666597080328/posts/8352295441815688939",
+  title: "Mix's Blog",
+  content: "gggggyyyyyy",
+  author: {
+    id: "08357211573037259523",
+    displayName: "Mix",
+    url: "https://www.blogger.com/profile/08357211573037259523",
+    image: {
+      url: "//4.bp.blogspot.com/-52UAza-yCtM/ZP6MJ5CIzSI/AAAAAAAA5Pg/34531YKZe2QQ37GJjnObQtEz6aPf35GLwCK4BGAYYCw/s35/md.jpg",
+    },
+  },
+  replies: {
+    totalItems: "0",
+    selfLink:
+      "https://www.googleapis.com/blogger/v3/blogs/865432666597080328/posts/8352295441815688939/comments",
+  },
+  labels: ["test"],
+  etag: '"dGltZXN0YW1wOiAxNzAwNDYxMTQ4OTgxCm9mZnNldDogLTI4ODAwMDAwCg"',
+};
+// const baseData = {
+//   title: "Blog Posts",
+//   meta_title: "",
+//   description: "this is meta description",
+//   author: "Admin",
+//   categories: ["others"],
+//   tags: ["others"],
+//   date: "2022-04-04T05:00:00Z",
+//   image: "/images/image-placeholder.png",
+//   draft: false,
+// };
+const { title } = baseData;
+---
+
+<script define:vars={{ api }}>
+  const url = new URL(location.href);
+</script>
+<Base title={title}>
+  <PostSingle post={baseData} client:only="react" />
+</Base>

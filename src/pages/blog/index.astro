@@ -9,18 +9,29 @@ import { sortByDate } from "@/lib/utils/sortFunctions";
 import PageHeader from "@/partials/PageHeader.astro";
 import PostSidebar from "@/partials/PostSidebar.astro";
 import { getEntry } from "astro:content";
+import { loginUrl } from "@/lib/api/googleLogin";
+import { api } from "@/lib/api/blogspot";
+import { storeBlogs } from "@/store/blogStore";
 
 const { blog_folder } = config.settings;
+const blogs = (await api.getBlogs()()).data;
+storeBlogs.set(blogs);
 const postIndex = await getEntry<any, string>(blog_folder, "-index");
 const posts = await getSinglePage(blog_folder);
-const allCategories = await getAllTaxonomy(blog_folder, "categories");
-const categories = await getTaxonomy(blog_folder, "categories");
-const tags = await getTaxonomy(blog_folder, "tags");
+const allCategories = await getAllTaxonomy(blogs.items);
+const categories = await getTaxonomy(blogs.items);
+const tags = await getTaxonomy(blogs.items);
 const sortedPosts = sortByDate(posts);
-const totalPages: number = Math.ceil(posts.length / config.settings.pagination);
+const totalPages: number = Math.ceil(
+  blogs.items.length / config.settings.pagination,
+);
 const currentPosts = sortedPosts.slice(0, config.settings.pagination);
 ---
 
+<script define:vars={{ loginUrl, blogs }}>
+  console.log(loginUrl);
+  console.log(blogs);
+</script>
 <Base
   title={postIndex.data.title}
   meta_title={postIndex.data.meta_title}
@@ -35,7 +46,7 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
         <div class="lg:col-8">
           <div class="row">
             {
-              currentPosts.map((post) => (
+              blogs.items.map((post: any) => (
                 <div class="mb-14 md:col-6">
                   <BlogCard data={post} />
                 </div>
